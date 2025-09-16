@@ -1,0 +1,2 @@
+# LandslideDebrisFlowAreaDetection
+崩壊地の裸地をU-Netで検出
