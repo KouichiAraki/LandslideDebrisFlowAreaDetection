@@ -1,3 +1,12 @@
+# -*- coding: utf-8 -*-
+"""
+テストデータの空中写真の色合いを、教師データの色合いに調整するスクリプト（GUI入力対応）
+
+Author: 荒木光一
+Date: 2025-09-10
+Version: 1.0.0
+License: MIT
+"""
 import os, cv2, glob
 import numpy as np
 import tkinter as tk

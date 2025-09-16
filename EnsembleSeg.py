@@ -1,17 +1,10 @@
+# -*- coding: utf-8 -*-
 """
-崩壊地の裸地をセグメンテーションする推論スクリプト（GUI入力対応）
+U-Netで空中写真から崩壊地の裸地をセグメンテーションする推論スクリプト（GUI入力対応）
 
-概要:
-    - 指定した画像フォルダ内の画像に対して、学習済みモデル（Keras/TensorFlow）を用いてセグメンテーション推論を行い、結果画像を出力します。
-    - 実行時パラメータ（画像フォルダ、拡張子、モデルパス、出力フォルダ）はWindows GUI（tkinter）で指定できます。
-
-使い方:
-    1. Python環境で必要なライブラリをインストールしてください。
-         - pip install numpy opencv-python tensorflow
-    2. 本スクリプトを実行するとGUIが起動します。
-    3. 各パラメータを入力し「実行」ボタンを押すと、推論結果画像が出力フォルダに保存されます。
-
-Author: KouichiAraki
+Author: 荒木光一
+Date: 2025-09-10
+Version: 1.0.0
 License: MIT
 """
 import glob, os, cv2
