@@ -60,7 +60,7 @@ def CalcMeanStd(ImgPath):
     ImgData = ReadImg(ImgPath)
     Mean, Std = cv2.meanStdDev(ImgData)
 
-    return float(Mean), float(Std), ImgData
+    return Mean.item(), Std.item(), ImgData
 
 def GetImgMeanStd(ImgDir, ImageExtension):
     """
@@ -120,7 +120,7 @@ def DrawBlackBasedThreshold(ImgData, Threshold):
 
     return Result
 
-def Adjust(TrainImgDir, TestImgDir, ImageExtension, OutputDir, Threshold):
+def Adjust(TestImgDir, ImageExtension, OutputDir, Threshold):
     """
     テスト画像の明るさ・コントラストを教師画像群の統計値に合わせて調整し、閾値処理後に出力フォルダへ保存する。
 
@@ -131,8 +131,7 @@ def Adjust(TrainImgDir, TestImgDir, ImageExtension, OutputDir, Threshold):
         OutputDir (str): 出力フォルダのパス。
         Threshold (int): 閾値（この値未満の画素は0にする）。
     """
-    TrainMean, TrainStd = GetImgMeanStd(TrainImgDir, ImageExtension)
-    print('Train Dir: Mean\t', TrainMean, '', TrainStd)
+    TrainMean, TrainStd = 92.53910632677241, 26.46361214881516
 
     TestImgPathList = glob.glob(os.path.join(TestImgDir, '*' + ImageExtension))
     for TestImgPath in TestImgPathList:
@@ -163,36 +162,30 @@ def OnRun():
     GUIの「実行」ボタン押下時の処理。入力値を取得し推論を実行する。
     """
     try:
-        TrainImgDir = EntryTrainImgDir.get()
         TestImgDir = EntryTestImgDir.get()
         ImageExtension = EntryExt.get()
         ThresholdStr = EntryThreshold.get()
         OutputDir = EntryOutputDir.get()
 
-        if not (TrainImgDir and TestImgDir and ImageExtension and ThresholdStr and OutputDir):
+        if not (TestImgDir and ImageExtension and ThresholdStr and OutputDir):
             messagebox.showerror('エラー', 'すべての項目を入力してください')
             return
 
-        Adjust(TrainImgDir, TestImgDir, ImageExtension, OutputDir, int(ThresholdStr))
+        Adjust(TestImgDir, ImageExtension, OutputDir, int(ThresholdStr))
         messagebox.showinfo('完了', '処理が完了しました')
 
     except Exception as e:
         messagebox.showerror('エラー', str(e))
 
 Root = tk.Tk()
-Root.title('テストデータの色調整（Ver. 1.0.0）')
+Root.title('色調整（Ver. 1.0.0）')
 
-tk.Label(Root, text='教師データの画像フォルダ').grid(row=0, column=0, sticky='e')
-EntryTrainImgDir = tk.Entry(Root, width=40)
-EntryTrainImgDir.grid(row=0, column=1)
-tk.Button(Root, text='参照', command=lambda: SelectDir(EntryTrainImgDir)).grid(row=0, column=2)
-
-tk.Label(Root, text='テストデータの画像フォルダ').grid(row=1, column=0, sticky='e')
+tk.Label(Root, text='分割写真のフォルダ').grid(row=1, column=0, sticky='e')
 EntryTestImgDir = tk.Entry(Root, width=40)
 EntryTestImgDir.grid(row=1, column=1)
 tk.Button(Root, text='参照', command=lambda: SelectDir(EntryTestImgDir)).grid(row=1, column=2)
 
-tk.Label(Root, text='画像の拡張子（例:png）').grid(row=2, column=0, sticky='e')
+tk.Label(Root, text='分割写真の拡張子（例:png）').grid(row=2, column=0, sticky='e')
 EntryExt = tk.Entry(Root, width=20)
 EntryExt.grid(row=2, column=1, sticky='w')
 
