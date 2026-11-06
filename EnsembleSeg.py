@@ -69,7 +69,7 @@ def Evaluation(ModelPath, TestImgPathList, ImgSize):
         ImgData = ReadImg(TestXPath)
         ImgData = cv2.resize(ImgData, (ImgSize[1], ImgSize[0]), interpolation=cv2.INTER_NEAREST)
         ImgData = ImgData.astype('float32') / 255.
-        PredOneHot = Model.predict(np.array([ImgData]))
+        PredOneHot = Model.predict(np.array([ImgData]), verbose=0)
 
         LikelihoodList.append(PredOneHot[0])
 
@@ -169,14 +169,14 @@ def OnRun():
         messagebox.showerror('エラー', str(e))
 
 Root = tk.Tk()
-Root.title('崩壊地の裸地検出（Ver. 1.0.0）')
+Root.title('崩壊地検出（Ver. 1.0.0）')
 
-tk.Label(Root, text='テスト画像フォルダ').grid(row=0, column=0, sticky='e')
+tk.Label(Root, text='分割写真のフォルダ').grid(row=0, column=0, sticky='e')
 EntryImgDir = tk.Entry(Root, width=40)
 EntryImgDir.grid(row=0, column=1)
 tk.Button(Root, text='参照', command=lambda: SelectDir(EntryImgDir)).grid(row=0, column=2)
 
-tk.Label(Root, text='画像の拡張子（例:png）').grid(row=1, column=0, sticky='e')
+tk.Label(Root, text='分割写真の拡張子（例:png）').grid(row=1, column=0, sticky='e')
 EntryExt = tk.Entry(Root, width=20)
 EntryExt.grid(row=1, column=1, sticky='w')
 
