@@ -169,7 +169,7 @@ def OnRun():
         messagebox.showerror('エラー', str(e))
 
 Root = tk.Tk()
-Root.title('崩壊地検出（Ver. 1.0.0）')
+Root.title('崩壊地抽出AI（Ver. 1.0.0）')
 
 tk.Label(Root, text='分割写真のフォルダ').grid(row=0, column=0, sticky='e')
 EntryImgDir = tk.Entry(Root, width=40)
